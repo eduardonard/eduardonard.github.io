@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block main %}
+    <script>function showAddCat() {
+        document.getElementById('addCategories').style.display = "block";
+        document.getElementById('addCategoryButton').style.display = "none";
+    }
+    function showRemCat() {
+        document.getElementById('remCategories').style.display = "block";
+        document.getElementById('remCategoryButton').style.display = "none";
+    }
+    function showNC() {
+        document.getElementById('NC').style.display = "block";
+        document.getElementById('NCButton').style.display = "none";
+    }
+    function showRemTransaction() {
+        document.getElementById('remTransaction').style.display = "block";
+        document.getElementById('remTransactionButton').style.display = "none";
+    }</script>
+
+    <div id="NC"  style="display:none;" class="answer_list">
+        <h2>Set new cash value</h2>
+        <form method="post" action="/settings">
+            <input type="number" name="newCash" placeholder="Amount">
+            <input type="submit">
+        </form>
+    </div>
+    <input type="button" id="NCButton" name="answer" value="Set cash value" onclick="showNC()" />
+
+    <br><br>
+    <div id="addCategories"  style="display:none;" class="answer_list" >
+        <h2>Add categories</h2>
+        <form action="/settings" method="post">
+            <select name="addCategoryType" id="cate">
+                <option value="nu" disabled selected>Type</option>
+                <option value="liability">Expense</option>
+                <option value="income">Income</option>
+            </select>
+            <input type="text" name="addCategory" placeholder="Name" autocomplete="off">
+            <input type="submit" value="Add">
+        </form>
+    </div>
+    <input type="button" id="addCategoryButton" name="answer" value="Add categories" onclick="showAddCat()" />
+
+    <br><br>
+    <div id="remCategories"  style="display:none;" class="answer_list" >
+        <h2>Remove categories</h2>
+        <form action="/settings" method="post">
+            <select name="remCategory" id="cate">
+                <option value="nu" disabled selected>Category</option>
+                {% for row in categories %}
+                    <option value="{{ row['category'] }}">{{ row["category"] }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Remove">
+        </form>
+    </div>
+    <input type="button" id="remCategoryButton" name="answer" value="Remove categories" onclick="showRemCat()" />
+    <br><br>
+    <div id="remTransaction"  style="display:none;" class="answer_list" >
+        <h2>Remove transactions</h2>
+        <form action="/settings" method="post">
+            <select name="remTransaction" id="cate">
+                <option value="nu" disabled selected>Transaction</option>
+                {% for row in transactions %}
+                    <option value="{{ row['id'] }}">Date: {{ row["date"] }}     Amount: {{ row["amount"] }}     Category: {{ row["category"] }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Remove">
+        </form>
+    </div>
+    <input type="button" id="remTransactionButton" name="answer" value="Remove transaction" onclick="showRemTransaction()" />
+{% endblock %}

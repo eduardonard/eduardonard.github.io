@@ -1,0 +1,46 @@
+
+.green
+{
+    color: #0FA200;
+    font-size: 1.5em;
+}
+#div-with-bg{
+    height: 200px;
+    background-image: url("https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_960_720.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-position-y: -150px;
+}
+
+body {
+    text-align: center;
+  }
+  
+  table {
+    border-collapse: collapse;
+  }
+  
+table#table1 {
+    width: 40%;
+    background: lightblue;
+  }
+  
+table#table2 {
+    width: 40%;
+    background: lightcoral;
+  }
+
+footer {
+    bottom: 0;
+    color: #b64545;
+    background-color: rgb(178, 230, 173);
+    height: 2em;
+    position: fixed;
+    font-size: small;
+    width:100%;
+}
+
+.wrap{
+    margin-bottom:50px;
+}

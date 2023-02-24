@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+        function showExpDiv() {
+        document.getElementById('expDiv').style.display = "block";
+        document.getElementById('tohidei').style.display = "none";
+        document.getElementById('tohidee').style.display = "none";
+        }
+        function showIncDiv() {
+        document.getElementById('incDiv').style.display = "block";
+        document.getElementById('tohidei').style.display = "none";
+        document.getElementById('tohidee').style.display = "none";
+        }</script>
+    <div id="div-with-bg">
+        <h1 style="line-height: 250%;">Current cash:  {{ "${:,.2f}".format(cash) }}</h1>
+        <br><br>
+        <input type="button" id="tohidee" name="answer" value="Add expense" onclick="showExpDiv()" />
+        <input type="button" id="tohidei" name="answer" value="Add income" onclick="showIncDiv()" />
+    </div>
+    <div id="expDiv"  style="display:none; background-repeat: no-repeat;background-position: center;background-size: cover;background-image: url('https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_960_720.png'); background-position-y: -350px;" class="answer_list" >
+        <br>
+        <form action="/" method="post" id="myform">  
+            <select name="category" id="cate">
+                <option value="nu" disabled selected>Category</option>
+                {% for row in expCategories %}
+                    <option value="{{ row['category'] }}">{{ row["category"] }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="amount" placeholder="Amount" max="0" oninput="this.value = -Math.abs(this.value)" required>
+            <input type="date" name="date" id="theDate" required>
+            <input type="text" name="comment" placeholder="Comment (not required)" autocomplete="off">
+            <br><br>
+            <input type="submit" value="Add transaction">
+        </form>
+        <br>
+    </div>
+    <div id="incDiv"  style="display:none; background-repeat: no-repeat;background-position: center;background-size: cover;background-image: url('https://cdn.pixabay.com/photo/2012/08/27/14/19/mountains-55067_960_720.png'); background-position-y: -350px;" class="answer_list" >
+        <br>
+        <form action="/" method="post" id="myform">  
+            <select name="category" id="cate">
+                <option value="nu" disabled selected>Category</option>
+                {% for row in incCategories %}
+                    <option value="{{ row['category'] }}">{{ row["category"] }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <input type="date" name="date" id="theDate" required>
+            <input type="text" name="comment" placeholder="Comment (not required)" autocomplete="off">
+            <br><br>
+            <input type="submit" value="Add transaction">
+        </form>
+        <br>
+    </div>
+
+    <table class="table"  style=" margin-left: 10%; width: 30%; float: left ;">
+        <thead>
+            <tr>
+                <th colspan="4">Income</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Date</td>
+                <td>Amount</td>
+                <td>Category</td>
+                <td>Comment</td>
+            </tr>
+            {% for row in income_db %}
+            <tr>
+                <td>{{ row["date"] }}</td>
+                <td>{{ row["amount"] }}</td>
+                <td>{{ row["category"] }}</td>
+                <td>{{ row["comment"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table class="table" style=" margin-right: 10%; width: 30%; float: right">
+        <thead>
+            <tr>
+                <th colspan="4">Liabilities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Date</td>
+                <td>Amount</td>
+                <td>Category</td>
+                <td>Comment</td>
+            </tr>
+            {% for row in liabilities_db %}
+            <tr>
+                <td>{{ row["date"] }}</td>
+                <td>{{ row["amount"] }}</td>
+                <td>{{ row["category"] }}</td>
+                <td>{{ row["comment"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
